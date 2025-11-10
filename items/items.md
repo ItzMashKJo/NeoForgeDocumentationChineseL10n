@@ -119,7 +119,7 @@ ExampleBlocksClass.EXAMPLE_BLOCK
 
 * 它代表的`Item`（译注：物品类型），可通过`ItemStack#getItem`得到。
 * 堆叠数量，通常在1到64之间，可通过`getCount`得到，可通过`setCount`或`shrink`改变。
-* 数据组件字典（data component map），存储着每个物品堆叠特定的数据。可通过`getComponents`得到。组件的值通常由`has`、`get`、`set`、`update`和`remove`来得到或更改。
+* 数据组件映射（data component map），存储着每个物品堆叠特定的数据。可通过`getComponents`得到。组件的值通常由`has`、`get`、`set`、`update`和`remove`来得到或更改。
 
 要创建一个`ItemStack`，调用`new ItemStack(Item)`，传入对应的物品。默认情况下，它会使用1的堆叠数量，没有NBT数据（译注：1.20.5及以后`ItemStack`不存在NBT数据了，这里可能是忘记改了）；也有接受堆叠数量和NBT数据的重载，如果需要的话。
 
@@ -128,11 +128,11 @@ ExampleBlocksClass.EXAMPLE_BLOCK
 如果你想要表示一个没有物品的物品堆叠，用`ItemStack.EMPTY`。如果你想要知道一个`ItemStack`是否为空，调用`#isEmpty`。
 
 ### ItemStack的可变性
-`ItemStack`是可变的对象。这意味着如果你调用例如`#setCount`或任何和数据组件字典相关的方法，`ItemStack`自身会被修改。原版广泛地利用`ItemStack`的可变性，数个方法也依赖于此。例如，`#split`方法分割它调用的`ItemStack`的数量，在处理过程中同时修改原`ItemStack`、返回一个新的`ItemStack`。
+`ItemStack`是可变的对象。这意味着如果你调用例如`#setCount`或任何和数据组件映射相关的方法，`ItemStack`自身会被修改。原版广泛地利用`ItemStack`的可变性，数个方法也依赖于此。例如，`#split`方法分割它调用的`ItemStack`的数量，在处理过程中同时修改原`ItemStack`、返回一个新的`ItemStack`。
 
 然而，在处理多个`ItemStack`时这可能导致问题。最常见的例子是当处理背包物品栏的时候，因为你需要同时考虑当前被光标选中的`ItemStack`，以及你尝试去放入/取出的`ItemStack`。
 
-> 注：当不确定时，最好有备无患，调用`#copy`复制该物品堆叠。
+> 注：当不确定时，安全总比后悔好，调用`#copy`复制该物品堆叠。
 
 ### JSON表达形式
 在很多情况下，例如配方中，物品堆叠需要以JSON对象的形式表达。一个物品堆叠的JSON表达形式看起来就像下面这样：
@@ -143,7 +143,7 @@ ExampleBlocksClass.EXAMPLE_BLOCK
 	"id": "minecraft:dirt",
 	//物品堆叠数量。可选项，默认为1。
 	"count": 4,
-	//一个数据组件的字典。可选项，默认为一个空字典。
+	//一个数据组件的映射。可选项，默认为一个空映射。
 	"components": {
 		"minecraft:enchantment_glint_override": true
 	}
