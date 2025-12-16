@@ -137,18 +137,18 @@ map.remove(DataComponents.BASE_COLOR);
 > 危险：原型和修订映射都是`PatchedDataComponentMap`的哈希码的一部分。因此，映射中的任何组件值都应该被视为**不可变的**。在修改一个数据组件的值后，总应该调用`#set`或下文讨论的和其相关的方法之一。
 
 ## 组件持有者
-所有能持有数据组件的实例实现了`DataComponentHolder`。`DataComponentHolder`事实上是一个`DataComponentMap`内部的只读方法的代理。
+所有能持有数据组件的实例实现了`DataComponentHolder`。`DataComponentHolder`事实上是一个`DataComponentMap`内部的只读方法的委托。
 
 ```Java
 //对于某个ItemStack stack
 
-//代理给'DataComponentMap#get'
+//委托给'DataComponentMap#get'
 @Nullable
 DyeColor color = stack.get(DataComponents.BASE_COLOR);
 ```
 
 ### MutableDataComponentHolder
-`MutableDataComponentHolder`是一个NeoForge提供的接口，用于支持对组件映射的写入方法。原版和NeoForge内部的所有实现使用一个`PatchedDataComponentMap`来存储数据组件，所以`#set`方法和`#remove`方法也有相同名称的代理方法。
+`MutableDataComponentHolder`是一个NeoForge提供的接口，用于支持对组件映射的写入方法。原版和NeoForge内部的所有实现使用一个`PatchedDataComponentMap`来存储数据组件，所以`#set`方法和`#remove`方法也有相同名称的委托方法。
 
 此外，`MutableDataComponentHolder`还提供了一个`#update`方法，它处理：获取组件值或提供的默认值，如果没有值被设置了的话；对值进行操作；接着将其设置回映射当中。操作符要么是一个`UnaryOperator`，它接受组件值的输入并返回组件值；要么是一个`BiFunction`，它接受组件值和另外一个对象的输入并返回组件值。
 
